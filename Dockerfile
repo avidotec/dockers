@@ -80,7 +80,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 
 # Install Node
-RUN useradd -d /home/nodejs nodejs
+RUN useradd -d /var/www nodejs
 
 RUN   \
   cd /opt && \
@@ -103,7 +103,7 @@ RUN npm install -g bower
  
 EXPOSE 6001 6002 
  
-WORKDIR /home/nodejs
+WORKDIR /var/www
 
 RUN mkdir app
 WORKDIR app
