@@ -2,17 +2,13 @@ FROM debian:wheezy
 
 MAINTAINER GoAppes <dev@goappes.com>
 
-# install couchdb
-FROM klaemo/couchdb
-
-# install node
-FROM goappes/nodejs
-
-# hoodie
-RUN npm install -g hoodie-cli
-
+ENV CI true
 # this avoid hoodie only accepting connections from localhost (kinda pointless in a docker world)
 ENV HOODIE_BIND_ADDRESS 0.0.0.0
 
-EXPOSE 6001 6002 
-CMD ["/bin/bash"]
+# Update the package repository
+RUN apt-get update; apt-get upgrade -y; apt-get install -y \
+  locales \
+  git
+
+FROM goappes/hoodie
