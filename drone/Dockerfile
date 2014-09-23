@@ -11,4 +11,5 @@ RUN apt-get update; apt-get upgrade -y; apt-get install -y \
   locales \
   git
 
+# install hoodie
 FROM goappes/hoodie

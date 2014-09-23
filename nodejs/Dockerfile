@@ -11,8 +11,6 @@ RUN apt-get update; apt-get upgrade -y; apt-get install -y \
   git \
   curl
 
-RUN useradd -d /var/www nodejs
-
 RUN   \
   cd /opt && \
   curl -O http://nodejs.org/dist/v$NODEJS_VERSION/node-v$NODEJS_VERSION-linux-x64.tar.gz && \
@@ -22,15 +20,14 @@ RUN   \
   ln -s /opt/node/bin/* . && \
   rm -f /opt/node-v$NODEJS_VERSION-linux-x64.tar.gz
 
-
+RUN useradd -d /var/www -m nodejs
 RUN su nodejs
 
 # hoodie
 RUN npm install -g gulp
 RUN npm install -g bower
  
-# Alt dependencies 
-WORKDIR /var/www
-
-RUN mkdir app
-WORKDIR app
+# Alt dependencies
+RUN mkdir /var/www/app
+RUN chown nodejs:nodejs -R /var/www/app
+WORKDIR /var/www/app
